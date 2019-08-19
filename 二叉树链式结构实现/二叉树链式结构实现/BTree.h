@@ -24,6 +24,15 @@ void BinaryTreeLevelOrder(BTNode* root);
 
 //非递归前序遍历,需要借助栈
 void BinaryTreePrevOrderNonR(BTNode* root);
+//非递归中序遍历
+void BinaryTreeInOrderNonR(BTNode* root);
+//非递归后序遍历
+void BinaryTreePostNonR(BTNode* root);
 
+//判断一个二叉树是不是完全二叉树
+int BinaryTreeComplete(BTNode* root);
+
+//返回二叉树的size
+int BinaryTreeSize(BTNode* root);
 
 #endif	//_BTREE_H

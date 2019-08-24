@@ -1,5 +1,9 @@
 #ifndef _SORT_H
 #define _SORT_H
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include "Queue.h"
 
 //插入排序
 void InsertSort(int* src, int n);
@@ -21,6 +25,8 @@ void BabbleSort(int* src, int n);
 
 //快速排序
 void QuickSort(int* src, int n);
+//非递归版的快速排序
+void QuickSortNonR(int* src, int n);
 
 
 

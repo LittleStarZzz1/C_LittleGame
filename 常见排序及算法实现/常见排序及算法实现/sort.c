@@ -1,6 +1,5 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "sort.h"
+
 //插入排序
 void InsertSort(int* src, int n){
 	int i, j;
@@ -196,17 +195,118 @@ int doublePointerWay2(int* src, int start, int end){
 	swapArgs(src + a, src + end);
 	return a;
 }
+//挖坑法
+int digWay(int* src, int start, int end){
+	int a = start, b = end;
+	int flag = 0;
+	int tmp = src[start];
 
+	while (1){
+		while (src[b] >= tmp){
+			b--;
+		}
+		if (a < b){
+			src[a] = src[b];
+		}
+		else {
+			src[a] = tmp;
+			return a;
+		}
+		while (src[a] <= tmp){
+			a++;
+		}
+		if (a < b){
+			src[b] = src[a];
+		}
+		else {
+			src[b] = tmp;
+			return b;
+		}
+	}
+}
+//Hoare法(三数取中法)
+int HoareWay(int* src, int start, int end){
+	int a = start + 1, b = end - 2;
+	int mid = (start + end) / 2;
+
+	if (src[start] > src[mid]){
+		swapArgs(src + start, src + mid);
+	}
+	if (src[mid] > src[end]){
+		swapArgs(src + mid, src + end);
+	}
+	if (src[start] > src[mid]){
+		swapArgs(src + start, src + mid);
+	}
+	if (end - start <= 2){
+		return mid;
+	}
+	swapArgs(src + mid, src + end - 1);
+
+	while (a <= b){
+		while (a < end - 1 && src[a] <= src[end - 1]){
+			a++;	//从左边找大于的src[end - 1]的数
+		}
+		while (b > 1 && src[b] >= src[end - 1]){
+			b--;	//从右边找小于src[end - 1]的数
+		}
+		if (a == b && (a == start + 1 || a == end - 2)){
+			break;
+		}
+		if (a < b){
+			swapArgs(src + a, src + b);
+		}
+	}
+	swapArgs(src + a, src + end - 1);
+	return a;
+}
 void dealQuickSort(int* src, int start, int end){
 	int mid;
-	if (start < end){
-		mid = doublePointerWay2(src, start, end);
+	if (start + 8 < end){
+		//mid = doublePointerWay2(src, start, end);
+		//mid = digWay(src, start, end);
+		mid = HoareWay(src, start, end);
 		dealQuickSort(src, start, mid - 1);
 		dealQuickSort(src, mid + 1, end);
+	}
+	else {
+		InsertSort(src + start, end - start + 1);
 	}
 }
 void QuickSort(int* src, int n){
 	dealQuickSort(src, 0, n - 1);
+}
+
+//非递归版的快速排序
+void QuickSortNonR(int* src, int n){
+	
+	int start, end;
+	int mid;
+
+	Queue qu;
+
+	QueueInit(&qu);
+
+	QueuePush(&qu, 0);
+	QueuePush(&qu, n - 1);
+
+	while (!QueueIsEmpty(&qu)){
+		start = QueueTop(&qu);
+		QueuePop(&qu);
+		end = QueueTop(&qu);
+		QueuePop(&qu);
+		mid = HoareWay(src, start, end);
+
+		if (start < mid - 1){
+			QueuePush(&qu, start);
+			QueuePush(&qu, mid - 1);
+		}
+		if (mid + 1 < end){
+			QueuePush(&qu, mid + 1);
+			QueuePush(&qu, end);
+		}
+	}
+	QueueDestory(&qu);
 }
 
 

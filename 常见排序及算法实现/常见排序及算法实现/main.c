@@ -3,6 +3,7 @@
 #include <time.h>
 #include "sort.h"
 
+
 #define BUFSIZE 10000
 
 void printArray(int* src, int n){
@@ -18,7 +19,7 @@ void printArray(int* src, int n){
 
 int main(){
 
-#if 1
+#if 0
 	//int src[10] = { 3, 1, 6, 7, 9, 2, 4, 8, 10, 5 };
 	int src[11] = { 1, 3, 6, 7, 9, 2, 4, 8, 10, 5, 11 };
 
@@ -32,7 +33,9 @@ int main(){
 
 	//BabbleSort(src, 10);
 
-	QuickSort(src, 11);
+	//QuickSort(src, 11);
+
+	QuickSortNonR(src, 11);
 	
 	printArray(src, 11);
 
